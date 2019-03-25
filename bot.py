@@ -1,24 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
-import json
 import os
-import subprocess
-import urllib.request
 import datetime 
-from pathlib import Path
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("RedBullBot")
 
 def start(bot, update):
     """Send a message when the command /start is issued."""  
-    print(update.message.from_user.id)
+    logger.info(update.message.from_user.id)
     update.message.reply_text('Ciao, mandami una foto mentre bevi una Redbull', quote=True)
 
 
@@ -41,13 +38,15 @@ def error(bot, update, error):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, error)
 
-
 def main():
     """Start the bot."""
-    token = os.environ["BOT_TOKEN"]
+    token = os.environ.get("BOT_TOKEN")
+    if token is None:
+        logger.critical("Please set the BOT_TOKEN env variable")
+        return 
+
     updater = Updater(token)
     dp = updater.dispatcher
-
 
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
