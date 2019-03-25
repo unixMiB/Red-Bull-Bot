@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+# Copyright (c) 2019 Steepo
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
 # -*- coding: utf-8 -*-
 import logging
 import os
