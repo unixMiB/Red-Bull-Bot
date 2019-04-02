@@ -29,12 +29,12 @@ def membercheck(userid, bot, update):
         logger.info(f"No control group set, skipping...")
         return True
 
-    if (bot.get_chat_member(CHAT_UID, userid).status != 'left'):
-        logger.info(f"{get_user_name(update.message.from_user)} is part of control group, continuing...")
-        return True
-    else:
+    if (bot.get_chat_member(CHAT_UID, userid).status in ('left', 'kicked', 'restricted')):
         logging.info(f"{get_user_name(update.message.from_user)} is not part of control group, aborting...")
         return False
+    else:
+        logger.info(f"{get_user_name(update.message.from_user)} is part of control group, continuing...")
+        return True
 
 def start(bot, update):
     """Send a message when the command /start is issued."""  
