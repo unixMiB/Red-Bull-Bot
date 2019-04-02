@@ -7,13 +7,13 @@
 
 ## Usage
 
-Open a chat on thelegram with [@UnixMib_RedBull_Bot](https://t.me/UnixMib_RedBull_Bot)
+Open a chat on telegram with [@UnixMib_RedBull_Bot](https://t.me/UnixMib_RedBull_Bot)
 
 [![UnixMib_RedBull_Bot](https://img.shields.io/badge/telegram-%40UnixMib__RedBull__Bot-blue.svg)](https://t.me/UnixMib_RedBull_Bot)
 
 ## Deploy
 
-You need to set the environmen variable `BOT_TOKEN` with a token from [@BotFather](https://t.me/botfather)
+You need to set the environment variable `BOT_TOKEN` with a token from [@BotFather](https://t.me/botfather)
 
 [![@BotFather](https://img.shields.io/badge/telegram-%40BotFather-blue.svg)](https://t.me/botfather)
 

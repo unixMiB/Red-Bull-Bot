@@ -22,11 +22,26 @@ logging.basicConfig(
 
 logger = logging.getLogger("RedBullBot")
 
+def membercheck(userid, bot, update):
+
+    CHAT_UID = os.environ.get("CHAT_UID")
+    if CHAT_UID is None:
+        logger.info(f"No control group set, skipping...")
+        return True
+
+    if (bot.get_chat_member(CHAT_UID, userid).status != 'left'):
+        logger.info(f"{get_user_name(update.message.from_user)} is part of control group, continuing...")
+        return True
+    else:
+        logging.info(f"{get_user_name(update.message.from_user)} is not part of control group, aborting...")
+        return False
+
 def start(bot, update):
     """Send a message when the command /start is issued."""  
     logger.info(f"Start issued by: {get_user_name(update.message.from_user)}")
-    update.message.reply_text('Ciao, mandami una foto mentre bevi una Red Bull', quote=True)
 
+    update.message.reply_text('Ciao, mandami una foto mentre bevi una Red Bull.\nRicorda, solo i membri di' + 
+        ' @unixmib possono usare questo bot.')
 
 def help(bot, update):
     """Send a message when the command /help is issued."""
@@ -60,14 +75,17 @@ def get_user_name(user):
     return name
 
 def save_photo(bot, update):
-    logger.info(f"Photo sent by: {get_user_name(update.message.from_user)}")
-    file_id = update.message.photo[-1].file_id
-    photo = bot.get_file(file_id)
-    update.message.reply_text("Grazie per la foto, goditi la tua Red Bull!", quote=True)
-    timestamp = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-    valid_user_name = slugify(get_user_name(update.message.from_user))
-    filename = f"{timestamp}_{valid_user_name}_{update.message.message_id}.png"
-    photo.download(Path(f"./pic/{filename}"))
+    if membercheck(update.message.from_user.id, bot, update):
+        logger.info(f"Photo sent by: {get_user_name(update.message.from_user)}")
+        file_id = update.message.photo[-1].file_id
+        photo = bot.get_file(file_id)
+        update.message.reply_text("Grazie per la foto, goditi la tua Red Bull!", quote=True)
+        timestamp = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+        valid_user_name = slugify(get_user_name(update.message.from_user))
+        filename = f"{timestamp}_{valid_user_name}_{update.message.message_id}.png"
+        photo.download(Path(f"./pic/{filename}"))
+    else:
+        update.message.reply_text('Mi spiace, ma l\'uso del bot è riservato ai membri di @unixmib')
 
 def error(bot, update, error):
     """Log Errors caused by Updates."""
@@ -80,7 +98,7 @@ def main():
     if BOT_TOKEN is None:
         logger.critical("Please set the BOT_TOKEN env variable")
         return 
-
+    
     updater = Updater(BOT_TOKEN)
     dp = updater.dispatcher
 
@@ -89,7 +107,6 @@ def main():
 
     # photo handler
     dp.add_handler(MessageHandler(Filters.photo, save_photo))
-
     dp.add_error_handler(error)
 
     logger.info("The bot is listening...")
