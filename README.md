@@ -7,7 +7,7 @@
 
 ## Usage
 
-Open a chat on thelegram with [@UnixMib_RedBull_Bot](https://t.me/UnixMib_RedBull_Bot)
+Open a chat on telegram with [@UnixMib_RedBull_Bot](https://t.me/UnixMib_RedBull_Bot)
 
 [![UnixMib_RedBull_Bot](https://img.shields.io/badge/telegram-%40UnixMib__RedBull__Bot-blue.svg)](https://t.me/UnixMib_RedBull_Bot)
 
