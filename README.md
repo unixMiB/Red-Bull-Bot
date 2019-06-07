@@ -21,3 +21,18 @@ You need to set the environmen variable `BOT_TOKEN` with a token from [@BotFathe
 pip3 install -r requirements.txt
 python3 bot.py
 ```
+
+## Docker images
+
+### Docker container tags
+
+-  `190607-slim`, `slim` (190318/slim)
+
+-  `190607-windowsservercore-1809`, `windowsservercore-1809` (190318/windows/servercore/1809)
+
+### Shared tags
+
+- `latest`
+- `190607`
+  - Debian Strech Slim
+  - Windows Server Core 1809
