@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3-windowsservercore-1809
 
 WORKDIR C:/
 
